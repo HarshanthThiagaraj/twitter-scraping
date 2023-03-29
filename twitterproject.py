@@ -10,10 +10,7 @@ PAGE_CONFIG = {"page_title":"MyApp"
 
 st.set_page_config(**PAGE_CONFIG)
 # REQUIRED VARIABLES
-client = pymongo.MongoClient("mongodb://localhost:27017/")  # To connect to MONGODB
-mydb = client["Twitter_Database"]    # To create a DATABASE
 tweets_df = pd.DataFrame()
-dfm = pd.DataFrame()
 st.write("# Twitter Search")
 option = st.selectbox('Please select the type of search',('Keyword', 'Hashtag'))
 word = st.text_input('Please enter a '+option, 'covid')
@@ -70,6 +67,8 @@ if not tweets_df.empty:
         y=st.button('Show Tweets',key=2)
         
     # UPLOAD DATA TO DATABASE
+    client = pymongo.MongoClient("mongodb://localhost:27017/")  # To connect to MONGODB
+    mydb = client["Twitter_Database"]    # To create a DATABASE
     if st.button('Upload Tweets to Database'):
         coll=word
         coll=coll.replace(' ','_')+'_Tweets'
